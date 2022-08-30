@@ -31,12 +31,15 @@ def backup():
     today_dir = '{}{}'.format(config.BACKUP_DIR, today)
     if not os.path.exists(today_dir):
         os.mkdir(today_dir)
-    dump_file_path = '{}{}{}_{}.pgsql.gz'.format(config.BACKUP_DIR, today, config.PGDATABASE, now)
-    command = 'pg_dump {0} | gzip > {1}'.format(config.PGDATABASE, dump_file_path)
+    dump_file_path = '{}{}{}_{}.pgsql'.format(config.BACKUP_DIR, today, config.PGDATABASE, now)
+    dump_file_path_gz = '{}{}{}_{}.pgsql.gz'.format(config.BACKUP_DIR, today, config.PGDATABASE, now)
+    command_pgsql = 'pg_dump {0} > {1}'.format(config.PGDATABASE, dump_file_path)
+    command_gz = 'gzip {}'.format(dump_file_path)
     error_exc = None
     error_msg = None
     try:
-        subprocess.run(command, shell=True, check=True, capture_output=True)
+        subprocess.run(command_pgsql, shell=True, check=True, capture_output=True)
+        subprocess.run(command_gz, shell=True, check=True, capture_output=True)
     except subprocess.CalledProcessError as e:
         error_msg = '\n\n\n'.join(('Error', str(e), e.stderr.decode('utf8')))
         error_exc = e
@@ -49,7 +52,7 @@ def backup():
         if error_msg and error_exc:
             bot.send_message(config.RECEIVER_ID, f'`{error_msg}`', parse_mode=ParseMode.MARKDOWN)
         else:
-            bot.send_document(config.RECEIVER_ID, dump_file_path)
+            bot.send_document(config.RECEIVER_ID, dump_file_path_gz, caption=f'#{config.PGDATABASE}')
 
 
 if __name__ == '__main__':
