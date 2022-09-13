@@ -4,3 +4,7 @@
 ## Requirements
 - Python3
 - Redis
+
+## Run
+
+`celery -A main worker -l info -B`

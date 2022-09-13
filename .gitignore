@@ -161,3 +161,5 @@ mysql
 # End of https://www.toptal.com/developers/gitignore/api/django
 
 my_account.session
+*.gz
+*.pgsql
