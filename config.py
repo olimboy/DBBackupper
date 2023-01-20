@@ -29,3 +29,6 @@ API_ID = os.getenv('API_ID')
 API_KEY = os.getenv('API_KEY')
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 RECEIVER_ID = os.getenv('RECEIVER_ID')
+
+CRON_BACKUP_MINUTE = os.getenv('CRON_RUN_MINUTE', 0)
+CRON_CLEAR_MINUTE = os.getenv('CRON_RUN_MINUTE', 0)

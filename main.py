@@ -20,14 +20,14 @@ celery = Celery('main', broker=config.REDIS_URL)
 def setup_periodic_tasks(sender, **kwargs):
     # Executes every Hour.
     sender.add_periodic_task(
-        crontab(hour='*/1', minute=0),
+        crontab(hour='*/1', minute=config.CRON_BACKUP_MINUTE),
         backup.s(),
         name='backup'
     )
 
     # Executes every Day.
     sender.add_periodic_task(
-        crontab(hour='1', minute=0),
+        crontab(hour='1', minute=config.CRON_CLEAR_MINUTE),
         clear.s(),
         name='clear'
     )
