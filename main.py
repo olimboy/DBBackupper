@@ -83,15 +83,15 @@ def clear():
                     os.remove(os.path.join(config.BACKUP_DIR, date_dir, filename))
 
         except Exception as e:
-            msg = '\n\n\n'.join(('Error', str(e)))
+            msg = '\n\n'.join(('Error', str(e)))
 
     with Client("my_account",
                 config.API_ID,
                 config.API_KEY,
                 bot_token=config.BOT_TOKEN,
                 workdir=config.WORK_DIR) as bot:
-        msg = "#clear\n\n" + msg
-        bot.send_message(config.RECEIVER_ID, f'`{msg}`', parse_mode=ParseMode.MARKDOWN)
+        msg = '\n\n'.join((f'#clear\n#{config.PGDATABASE}', f'`{msg}`'))
+        bot.send_message(config.RECEIVER_ID, msg, parse_mode=ParseMode.MARKDOWN)
 
 
 if __name__ == '__main__':
