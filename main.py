@@ -94,6 +94,23 @@ def clear():
         bot.send_message(config.RECEIVER_ID, msg, parse_mode=ParseMode.MARKDOWN)
 
 
+def handle_talk():
+
+    app = Client("my_account",
+                config.API_ID,
+                config.API_KEY,
+                bot_token=config.BOT_TOKEN,
+                workdir=config.WORK_DIR)
+
+
+    @app.on_message()
+    async def hello(client, message):
+        print(message)
+        await message.reply("Hello from Pyrogram!")
+
+
+    app.run()
+
 if __name__ == '__main__':
     if '--test' in sys.argv:
         logging.basicConfig(level=logging.INFO)
@@ -101,3 +118,6 @@ if __name__ == '__main__':
             backup()
         if '--clear' in sys.argv:
             clear()
+    if '--handle' in sys.argv:
+        logging.basicConfig(level=logging.INFO)
+        handle_talk()
